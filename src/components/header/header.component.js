@@ -6,6 +6,8 @@ import {Link} from 'react-router-dom';
 import {auth} from '../../firebase/firebase.utils';
 
 import './header.styles.scss';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
 const Header = ({currentUser}) => (
     <div className='header'>
@@ -28,7 +30,11 @@ const Header = ({currentUser}) => (
                     <Link className='option' to='/signin'>SIGN IN</Link>
                 )
             }
+            <div className='option'>
+                <CartIcon/>
+            </div>
         </div>
+        <CartDropdown/>
     </div>
 );
 
