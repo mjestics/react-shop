@@ -33,7 +33,7 @@ class App extends React.Component {
         return (
             <div>
                 <BrowserRouter>
-                    <Header/>
+                    <Header currentUser={this.state.user}/>
                     <Switch>
                         <Route exact path='/' component={HomePage}/>
                         <Route path='/shop' component={ShopPage}/>
