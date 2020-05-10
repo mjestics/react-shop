@@ -5,6 +5,11 @@ import './directory.styles.scss';
 
 export class Directory extends React.Component {
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log("directory should update");
+        return true;
+    }
+
     constructor() {
         super();
 
@@ -47,8 +52,9 @@ export class Directory extends React.Component {
     }
 
     render() {
+        console.log("directory render");
         return (
-            <div className='directory-menu'>
+        <div className='directory-menu'>
                 {
                     this.state.sections.map(({id, ...otherSectionProps}) => (
                         <MenuItem key={id} {...otherSectionProps} />
