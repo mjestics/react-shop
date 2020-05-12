@@ -23,12 +23,12 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
     const snapShot = await userRef.get();
 
-    if(!snapShot.exists) {
-        const { displayName, email } = userAuth;
+    if (!snapShot.exists) {
+        const {displayName, email} = userAuth;
         const createdAt = new Date();
 
         try {
-            await userRef.set( {
+            await userRef.set({
                 displayName,
                 email,
                 createdAt,
@@ -41,6 +41,23 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
     console.log(snapShot);
     return userRef;
+};
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = firestore.collection(collectionKey);
+    console.log('colref: %O', collectionRef);
+
+
+    const batch = firestore.batch();
+
+    objectsToAdd.forEach(obj => {
+        const newDocRef = collectionRef.doc();
+        batch.set(newDocRef, obj);
+    });
+
+    // return await batch.commit()
+    //example of usage:
+    //addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})));
 };
 
 export const auth = firebase.auth();
