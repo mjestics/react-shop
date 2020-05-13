@@ -19,5 +19,5 @@ export const selectCollection = collectionUrlParam => createSelector(
 
 export const isCollectionsLoaded = createSelector(
     [selectShop],
-    shop => !!shop.collections
+    shop => shop.collections
 );
