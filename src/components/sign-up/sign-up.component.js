@@ -3,7 +3,8 @@ import React from 'react';
 import './sign-up.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import {auth, createUserProfileDocument} from '../../firebase/firebase.utils';
+import {signUpStart} from '../../redux/user/user.actions';
+import {connect} from 'react-redux';
 
 class SignUp extends React.Component {
     constructor(props) {
@@ -24,32 +25,21 @@ class SignUp extends React.Component {
     };
 
     handleSubmit = async event => {
-       event.preventDefault();
+        event.preventDefault();
 
-       const { email, password, confirmPassword, displayName } = this.state;
+        const {email, password, confirmPassword, displayName} = this.state;
+        const {signUpStart} = this.props;
 
-       if(password !== confirmPassword) {
-           alert("Passwords don't match");
-           return;
-       }
-
-       try {
-           const { user } = await auth.createUserWithEmailAndPassword(email, password);
-
-           createUserProfileDocument(user, {displayName});
-       } catch (error) {
-           console.log('Error: %O', error);
-       }
-        this.state = {
-            displayName: '',
-            email: '',
-            password: '',
-            confirmPassword: ''
+        if (password !== confirmPassword) {
+            alert("Passwords don't match");
+            return;
         }
+
+        signUpStart({email, password, displayName});
     };
 
     render() {
-        const { email, password, confirmPassword, displayName } = this.state;
+        const {email, password, confirmPassword, displayName} = this.state;
         return (
             <div className='sign-up'>
                 <h2 className='title'>I do not have an account </h2>
@@ -95,4 +85,8 @@ class SignUp extends React.Component {
     }
 }
 
-export default SignUp;
+const mapDistpatchToProps = dispatch => ({
+    signUpStart: userCredentials => dispatch(signUpStart(userCredentials))
+});
+
+export default connect(null, mapDistpatchToProps)(SignUp);
