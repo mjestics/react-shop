@@ -78,6 +78,15 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
     //addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})));
 };
 
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = auth.onAuthStateChanged(userAuth => {
+          unsubscribe();
+          resolve(userAuth);
+      }, reject)
+    })
+};
+
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
